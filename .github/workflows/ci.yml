@@ -1,0 +1,93 @@
+# Keyboat — GitHub Actions CI
+# Runs on every push and PR: SwiftLint → Build → Unit Tests
+
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  # ─── 1. Lint ─────────────────────────────────────────────────────────
+  lint:
+    name: SwiftLint
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run SwiftLint
+        run: |
+          brew install swiftlint 2>/dev/null || true
+          swiftlint lint --strict --reporter github-actions-logging
+
+  # ─── 2. Build & Unit Tests ──────────────────────────────────────────
+  build-and-test:
+    name: Build & Unit Tests
+    runs-on: macos-14
+    needs: lint
+
+    strategy:
+      matrix:
+        destination:
+          - "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
+          - "platform=iOS Simulator,name=iPhone 15 Pro Max,OS=17.4"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 15.x
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
+
+      - name: Resolve Swift Packages
+        run: xcodebuild -resolvePackageDependencies -project Keyboat.xcodeproj -scheme KeyboatApp
+
+      # ── Core package tests (no simulator needed) ──
+      - name: Test KeyboatCore (Swift package)
+        run: |
+          cd Packages/KeyboatCore
+          swift test --parallel
+
+      # ── Full scheme build ──
+      - name: Build KeyboatApp
+        run: |
+          xcodebuild build \
+            -project Keyboat.xcodeproj \
+            -scheme KeyboatApp \
+            -destination "${{ matrix.destination }}" \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            | xcpretty --color
+
+      # ── Build keyboard extension ──
+      - name: Build KeyboatExtension
+        run: |
+          xcodebuild build \
+            -project Keyboat.xcodeproj \
+            -scheme KeyboatExtension \
+            -destination "${{ matrix.destination }}" \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            | xcpretty --color
+
+  # ─── 3. Memory baseline (Phase 0 gate) ─────────────────────────────
+  memory-check:
+    name: Memory Baseline (informational)
+    runs-on: macos-14
+    needs: build-and-test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run KeyboatCore package tests with memory sanitizer
+        run: |
+          cd Packages/KeyboatCore
+          swift test --sanitize=address 2>&1 | tail -30
+        continue-on-error: true   # informational until Phase 0 thresholds established

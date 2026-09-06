@@ -1,0 +1,156 @@
+name: Keyboat
+options:
+  bundleIdPrefix: com.mukeshtiwari.keyboat
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "15.4"
+  generateEmptyDirectories: true
+  createIntermediateGroups: true
+  transitivelyLinkDependencies: true
+  groupSortPosition: top
+  defaultConfig: Debug
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    ENABLE_TESTABILITY: YES
+    DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+    CLANG_ENABLE_MODULES: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+
+packages:
+  KeyboatCore:
+    path: Packages/KeyboatCore
+
+targets:
+
+  # ─── 1. Container App ──────────────────────────────────────────────
+  KeyboatApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    bundleId: com.mukeshtiwari.keyboat.app
+    sources:
+      - path: KeyboatApp/Sources
+        type: group
+      - path: Resources
+        type: group
+        buildPhase: resources
+    resources:
+      - path: Resources
+    dependencies:
+      - package: KeyboatCore
+      - target: KeyboatExtension
+        embed: true
+        codeSign: true
+    entitlements:
+      path: KeyboatApp/KeyboatApp.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mukeshtiwari.keyboat.app
+        PRODUCT_NAME: Keyboat
+        INFOPLIST_FILE: KeyboatApp/Info.plist
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: YES
+    scheme:
+      testTargets:
+        - KeyboatAppUITests
+      gatherCoverageData: true
+
+  # ─── 2. Keyboard Extension ─────────────────────────────────────────
+  KeyboatExtension:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    bundleId: com.mukeshtiwari.keyboat.app.KeyboatExtension
+    sources:
+      - path: KeyboatExtension/Sources
+        type: group
+    dependencies:
+      - package: KeyboatCore
+    entitlements:
+      path: KeyboatExtension/KeyboatExtension.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mukeshtiwari.keyboat.app.KeyboatExtension
+        PRODUCT_NAME: KeyboatExtension
+        INFOPLIST_FILE: KeyboatExtension/Info.plist
+        NSExtensionPointIdentifier: com.apple.keyboard-service
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+        # Keep memory footprint as small as possible
+        DEAD_CODE_STRIPPING: YES
+        STRIP_SWIFT_SYMBOLS: NO
+        # Extension must not have @main — uses UIInputViewController
+        APPLICATION_EXTENSION_API_ONLY: YES
+    postBuildScripts:
+      - script: |
+          if which swiftlint > /dev/null; then
+            swiftlint lint --config "${SRCROOT}/.swiftlint.yml" --path "${SRCROOT}/KeyboatExtension"
+          fi
+        name: SwiftLint (Extension)
+        basedOnDependencyAnalysis: false
+
+  # ─── 3. Container App UI Tests ────────────────────────────────────
+  KeyboatAppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    bundleId: com.mukeshtiwari.keyboat.app.uitests
+    sources:
+      - path: Tests/UI
+    dependencies:
+      - target: KeyboatApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mukeshtiwari.keyboat.app.uitests
+        TEST_HOST: ""
+
+schemes:
+  Keyboat:
+    build:
+      targets:
+        KeyboatApp: all
+        KeyboatExtension: all
+        KeyboatAppUITests: [testing]
+    run:
+      config: Debug
+      commandLineArguments:
+        "-com.apple.CoreData.SQLDebug": "0"
+    test:
+      config: Debug
+      targets:
+        - KeyboatAppUITests
+      gatherCoverageData: true
+    archive:
+      config: Release
+    analyze:
+      config: Debug
+    profile:
+      config: Release
+
+  KeyboatApp:
+    build:
+      targets:
+        KeyboatApp: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    archive:
+      config: Release
+
+  KeyboatExtension:
+    build:
+      targets:
+        KeyboatExtension: all
+    run:
+      config: Debug
+      askForAppToLaunch: true
+    test:
+      config: Debug
+    archive:
+      config: Release

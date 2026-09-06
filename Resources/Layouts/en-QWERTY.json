@@ -1,0 +1,80 @@
+{
+  "id": "en-QWERTY",
+  "locale": "en",
+  "displayName": "English (QWERTY)",
+  "numberRow": {
+    "keys": [
+      { "id": "num-1", "label": "1", "secondaryLabel": null, "action": { "character": "1" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "1" },
+      { "id": "num-2", "label": "2", "secondaryLabel": null, "action": { "character": "2" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "2" },
+      { "id": "num-3", "label": "3", "secondaryLabel": null, "action": { "character": "3" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "3" },
+      { "id": "num-4", "label": "4", "secondaryLabel": null, "action": { "character": "4" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "4" },
+      { "id": "num-5", "label": "5", "secondaryLabel": null, "action": { "character": "5" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "5" },
+      { "id": "num-6", "label": "6", "secondaryLabel": null, "action": { "character": "6" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "6" },
+      { "id": "num-7", "label": "7", "secondaryLabel": null, "action": { "character": "7" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "7" },
+      { "id": "num-8", "label": "8", "secondaryLabel": null, "action": { "character": "8" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "8" },
+      { "id": "num-9", "label": "9", "secondaryLabel": null, "action": { "character": "9" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "9" },
+      { "id": "num-0", "label": "0", "secondaryLabel": null, "action": { "character": "0" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "0" }
+    ]
+  },
+  "rows": [
+    {
+      "id": "row-q",
+      "edgeSpacingFactor": 0.0,
+      "keys": [
+        { "id": "q", "label": "q", "secondaryLabel": null, "action": { "character": "q" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "Q" },
+        { "id": "w", "label": "w", "secondaryLabel": null, "action": { "character": "w" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "W" },
+        { "id": "e", "label": "e", "secondaryLabel": null, "action": { "character": "e" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "E" },
+        { "id": "r", "label": "r", "secondaryLabel": null, "action": { "character": "r" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "R" },
+        { "id": "t", "label": "t", "secondaryLabel": null, "action": { "character": "t" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "T" },
+        { "id": "y", "label": "y", "secondaryLabel": null, "action": { "character": "y" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "Y" },
+        { "id": "u", "label": "u", "secondaryLabel": null, "action": { "character": "u" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "U" },
+        { "id": "i", "label": "i", "secondaryLabel": null, "action": { "character": "i" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "I" },
+        { "id": "o", "label": "o", "secondaryLabel": null, "action": { "character": "o" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "O" },
+        { "id": "p", "label": "p", "secondaryLabel": null, "action": { "character": "p" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "P" }
+      ]
+    },
+    {
+      "id": "row-a",
+      "edgeSpacingFactor": 0.5,
+      "keys": [
+        { "id": "a", "label": "a", "secondaryLabel": null, "action": { "character": "a" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "A" },
+        { "id": "s", "label": "s", "secondaryLabel": null, "action": { "character": "s" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "S" },
+        { "id": "d", "label": "d", "secondaryLabel": null, "action": { "character": "d" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "D" },
+        { "id": "f", "label": "f", "secondaryLabel": null, "action": { "character": "f" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "F" },
+        { "id": "g", "label": "g", "secondaryLabel": null, "action": { "character": "g" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "G" },
+        { "id": "h", "label": "h", "secondaryLabel": null, "action": { "character": "h" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "H" },
+        { "id": "j", "label": "j", "secondaryLabel": null, "action": { "character": "j" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "J" },
+        { "id": "k", "label": "k", "secondaryLabel": null, "action": { "character": "k" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "K" },
+        { "id": "l", "label": "l", "secondaryLabel": null, "action": { "character": "l" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "L" }
+      ]
+    },
+    {
+      "id": "row-z",
+      "edgeSpacingFactor": 0.0,
+      "keys": [
+        { "id": "shift", "label": "⇧", "secondaryLabel": null, "action": "shift", "widthFactor": 1.5, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "Shift" },
+        { "id": "z", "label": "z", "secondaryLabel": null, "action": { "character": "z" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "Z" },
+        { "id": "x", "label": "x", "secondaryLabel": null, "action": { "character": "x" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "X" },
+        { "id": "c", "label": "c", "secondaryLabel": null, "action": { "character": "c" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "C" },
+        { "id": "v", "label": "v", "secondaryLabel": null, "action": { "character": "v" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "V" },
+        { "id": "b", "label": "b", "secondaryLabel": null, "action": { "character": "b" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "B" },
+        { "id": "n", "label": "n", "secondaryLabel": null, "action": { "character": "n" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "longPressAlternates", "accessibilityLabel": "N" },
+        { "id": "m", "label": "m", "secondaryLabel": null, "action": { "character": "m" }, "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "M" },
+        { "id": "backspace", "label": "⌫", "secondaryLabel": null, "action": "backspace", "widthFactor": 1.5, "heightFactor": 1.0, "repeatBehavior": "accelerating", "accessibilityLabel": "Delete", "accessibilityHint": "Deletes the previous character" }
+      ]
+    }
+  ],
+  "bottomRow": {
+    "leftKeys": [
+      { "id": "nextKeyboard", "label": "🌐", "secondaryLabel": null, "action": "nextKeyboard", "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "Next keyboard" },
+      { "id": "numbers", "label": "123", "secondaryLabel": null, "action": "numbers", "widthFactor": 1.3, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "Numbers and symbols" }
+    ],
+    "spaceKey": {
+      "id": "space", "label": "space", "secondaryLabel": null, "action": "space", "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "Space"
+    },
+    "rightKeys": [
+      { "id": "clipboard", "label": "📋", "secondaryLabel": null, "action": "clipboard", "widthFactor": 1.0, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "Clipboard history" },
+      { "id": "return", "label": "return", "secondaryLabel": null, "action": "return", "widthFactor": 1.3, "heightFactor": 1.0, "repeatBehavior": "none", "accessibilityLabel": "Return" }
+    ]
+  }
+}

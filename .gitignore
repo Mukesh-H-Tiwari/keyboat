@@ -1,0 +1,58 @@
+# Keyboat — .gitignore
+
+# Xcode
+*.xcuserstate
+*.xcworkspacedata
+xcuserdata/
+DerivedData/
+*.xccheckout
+*.xcscmblueprint
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/.build/
+
+# CocoaPods (not used, but just in case)
+Pods/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# VS Code / Cursor
+.vscode/
+.cursor/
+*.code-workspace
+
+# Instruments
+*.trace
+
+# TestFlight / Archive
+*.xcarchive
+
+# Secrets — never commit these
+*.p8
+*.p12
+*.mobileprovision
+AuthKey_*.p8
+GoogleService-Info.plist
+
+# Logs
+*.log

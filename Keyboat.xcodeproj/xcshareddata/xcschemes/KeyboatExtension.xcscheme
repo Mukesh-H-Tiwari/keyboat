@@ -52,8 +52,12 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "0"
+         BundleIdentifier = "com.apple.mobilesafari"
+         RemotePath = "/var/containers/Bundle/Application/3D9C7D82-BC06-476B-A9B9-97F70732124E/MobileSafari.app">
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "229E2D84A7FCEC51DCDF9F50"
@@ -61,7 +65,7 @@
             BlueprintName = "KeyboatExtension"
             ReferencedContainer = "container:Keyboat.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

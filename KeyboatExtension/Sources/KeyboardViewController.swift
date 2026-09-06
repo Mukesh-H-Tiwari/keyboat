@@ -99,16 +99,12 @@ final class KeyboardViewController: UIInputViewController {
 
     override func textDidChange(_ textInput: (any UITextInput)?) {
         super.textDidChange(textInput)
-        prefs.reloadFromDefaults()
-        themeEngine.activate(themeID: prefs.themeID)
         // Auto-capitalise: if the proxy says we're at sentence start, engage shift
         updateShiftForContext()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        prefs.reloadFromDefaults()
-        themeEngine.activate(themeID: prefs.themeID)
     }
 
     // MARK: - Setup

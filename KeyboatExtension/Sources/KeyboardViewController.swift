@@ -42,6 +42,30 @@ final class KeyboardViewController: UIInputViewController {
 
         setupInputProxy()
         mountKeyboardView()
+        registerDarwinNotificationObserver()
+    }
+
+    private func registerDarwinNotificationObserver() {
+        let center = CFNotificationCenterGetDarwinNotifyCenter()
+        let observer = Unmanaged.passUnretained(self).toOpaque()
+        let name = "com.mukeshtiwari.keyboat.themeChanged" as CFString
+
+        CFNotificationCenterAddObserver(
+            center,
+            observer,
+            { _, observer, _, _, _ in
+                guard let observer = observer else { return }
+                let vc = Unmanaged<KeyboardViewController>.fromOpaque(observer).takeUnretainedValue()
+                Task { @MainActor in
+                    vc.prefs.reloadFromDefaults()
+                    vc.themeEngine.reloadCustomThemes()
+                    vc.themeEngine.activate(themeID: vc.prefs.themeID)
+                }
+            },
+            name,
+            nil,
+            .deliverImmediately
+        )
     }
 
     override func viewWillAppear(_ animated: Bool) {

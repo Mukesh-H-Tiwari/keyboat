@@ -102,15 +102,61 @@ public final class PreferencesStore: ObservableObject {
     // MARK: - Persist on change
 
     private func setupPersistence() {
-        $themeID.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v, forKey: PrefKey.themeID.rawValue) }.store(in: &cancellables)
-        $numberRowEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v, forKey: PrefKey.numberRowEnabled.rawValue) }.store(in: &cancellables)
-        $hapticsEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v, forKey: PrefKey.hapticsEnabled.rawValue) }.store(in: &cancellables)
-        $hapticsIntensity.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v.rawValue, forKey: PrefKey.hapticsIntensity.rawValue) }.store(in: &cancellables)
-        $soundEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v, forKey: PrefKey.soundEnabled.rawValue) }.store(in: &cancellables)
-        $activeLocale.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v, forKey: PrefKey.activeLocale.rawValue) }.store(in: &cancellables)
-        $autocorrectEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v, forKey: PrefKey.autocorrectEnabled.rawValue) }.store(in: &cancellables)
-        $clipboardEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v, forKey: PrefKey.clipboardEnabled.rawValue) }.store(in: &cancellables)
-        $clipboardRetentionDays.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v, forKey: PrefKey.clipboardRetentionDays.rawValue) }.store(in: &cancellables)
-        $hasCompletedOnboarding.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in self?.defaults.set(v, forKey: PrefKey.hasCompletedOnboarding.rawValue) }.store(in: &cancellables)
+        $themeID.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v, forKey: PrefKey.themeID.rawValue)
+            self?.defaults.synchronize()
+            self?.postDarwinNotification("com.mukeshtiwari.keyboat.themeChanged")
+        }.store(in: &cancellables)
+
+        $numberRowEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v, forKey: PrefKey.numberRowEnabled.rawValue)
+            self?.defaults.synchronize()
+        }.store(in: &cancellables)
+
+        $hapticsEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v, forKey: PrefKey.hapticsEnabled.rawValue)
+            self?.defaults.synchronize()
+        }.store(in: &cancellables)
+
+        $hapticsIntensity.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v.rawValue, forKey: PrefKey.hapticsIntensity.rawValue)
+            self?.defaults.synchronize()
+        }.store(in: &cancellables)
+
+        $soundEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v, forKey: PrefKey.soundEnabled.rawValue)
+            self?.defaults.synchronize()
+        }.store(in: &cancellables)
+
+        $activeLocale.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v, forKey: PrefKey.activeLocale.rawValue)
+            self?.defaults.synchronize()
+        }.store(in: &cancellables)
+
+        $autocorrectEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v, forKey: PrefKey.autocorrectEnabled.rawValue)
+            self?.defaults.synchronize()
+        }.store(in: &cancellables)
+
+        $clipboardEnabled.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v, forKey: PrefKey.clipboardEnabled.rawValue)
+            self?.defaults.synchronize()
+        }.store(in: &cancellables)
+
+        $clipboardRetentionDays.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v, forKey: PrefKey.clipboardRetentionDays.rawValue)
+            self?.defaults.synchronize()
+        }.store(in: &cancellables)
+
+        $hasCompletedOnboarding.dropFirst().receive(on: DispatchQueue.main).sink { [weak self] v in
+            self?.defaults.set(v, forKey: PrefKey.hasCompletedOnboarding.rawValue)
+            self?.defaults.synchronize()
+        }.store(in: &cancellables)
+    }
+
+    private func postDarwinNotification(_ name: String) {
+        let notificationName = name as CFString
+        let center = CFNotificationCenterGetDarwinNotifyCenter()
+        CFNotificationCenterPostNotification(center, CFNotificationName(notificationName), nil, nil, true)
     }
 }

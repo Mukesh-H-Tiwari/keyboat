@@ -82,17 +82,21 @@ public final class PreferencesStore: ObservableObject {
 
     // MARK: - Read from storage
 
-    private func readFromDefaults() {
+    public func reloadFromDefaults() {
         themeID              = defaults.string(forKey: PrefKey.themeID.rawValue) ?? "dark"
-        numberRowEnabled     = defaults.bool(forKey: PrefKey.numberRowEnabled.rawValue)
-        hapticsEnabled       = defaults.bool(forKey: PrefKey.hapticsEnabled.rawValue)
+        numberRowEnabled     = defaults.object(forKey: PrefKey.numberRowEnabled.rawValue) != nil ? defaults.bool(forKey: PrefKey.numberRowEnabled.rawValue) : true
+        hapticsEnabled       = defaults.object(forKey: PrefKey.hapticsEnabled.rawValue) != nil ? defaults.bool(forKey: PrefKey.hapticsEnabled.rawValue) : true
         hapticsIntensity     = HapticLevel(rawValue: defaults.string(forKey: PrefKey.hapticsIntensity.rawValue) ?? "") ?? .medium
         soundEnabled         = defaults.bool(forKey: PrefKey.soundEnabled.rawValue)
         activeLocale         = defaults.string(forKey: PrefKey.activeLocale.rawValue) ?? "en"
-        autocorrectEnabled   = defaults.bool(forKey: PrefKey.autocorrectEnabled.rawValue)
-        clipboardEnabled     = defaults.bool(forKey: PrefKey.clipboardEnabled.rawValue)
-        clipboardRetentionDays = defaults.integer(forKey: PrefKey.clipboardRetentionDays.rawValue)
+        autocorrectEnabled   = defaults.object(forKey: PrefKey.autocorrectEnabled.rawValue) != nil ? defaults.bool(forKey: PrefKey.autocorrectEnabled.rawValue) : true
+        clipboardEnabled     = defaults.object(forKey: PrefKey.clipboardEnabled.rawValue) != nil ? defaults.bool(forKey: PrefKey.clipboardEnabled.rawValue) : true
+        clipboardRetentionDays = defaults.integer(forKey: PrefKey.clipboardRetentionDays.rawValue) > 0 ? defaults.integer(forKey: PrefKey.clipboardRetentionDays.rawValue) : 7
         hasCompletedOnboarding = defaults.bool(forKey: PrefKey.hasCompletedOnboarding.rawValue)
+    }
+
+    private func readFromDefaults() {
+        reloadFromDefaults()
     }
 
     // MARK: - Persist on change

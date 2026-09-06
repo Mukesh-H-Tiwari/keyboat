@@ -46,6 +46,8 @@ final class KeyboardViewController: UIInputViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        prefs.reloadFromDefaults()
+        themeEngine.reloadCustomThemes()
         themeEngine.activate(themeID: prefs.themeID)
         HapticEngine.shared.prepare()
     }

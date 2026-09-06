@@ -53,7 +53,14 @@ public final class ThemeEngine: ObservableObject, ThemeEngineProtocol {
 
     // MARK: - Activation
 
+    public func reloadCustomThemes() {
+        let builtIns = ThemeEngine.builtInThemes()
+        let customs  = ThemeEngine.loadCustomThemes()
+        self.allThemes = builtIns + customs
+    }
+
     public func activate(themeID: String) {
+        reloadCustomThemes()
         guard let theme = allThemes.first(where: { $0.id == themeID }) else { return }
         activeTheme = theme
         prefs.themeID = themeID

@@ -14,9 +14,9 @@ public enum AppGroup {
     // MARK: - Shared UserDefaults
 
     /// UserDefaults backed by the shared App Group container.
-    /// Returns nil if the group isn't configured (shouldn't happen in production).
+    /// Safely falls back to UserDefaults.standard if App Group provisioning isn't enabled yet on device.
     public nonisolated(unsafe) static let defaults: UserDefaults = {
-        if let d = UserDefaults(suiteName: suiteName) {
+        if containerURL != nil, let d = UserDefaults(suiteName: suiteName) {
             return d
         }
         return UserDefaults.standard

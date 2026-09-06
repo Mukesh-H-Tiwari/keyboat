@@ -42,37 +42,6 @@ final class KeyboardViewController: UIInputViewController {
 
         setupInputProxy()
         mountKeyboardView()
-        registerDarwinNotificationObserver()
-    }
-
-    deinit {
-        let center = CFNotificationCenterGetDarwinNotifyCenter()
-        let observer = Unmanaged.passUnretained(self).toOpaque()
-        let name = "com.mukeshtiwari.keyboat.themeChanged" as CFString
-        CFNotificationCenterRemoveObserver(center, observer, CFNotificationName(name), nil)
-    }
-
-    private func registerDarwinNotificationObserver() {
-        let center = CFNotificationCenterGetDarwinNotifyCenter()
-        let observer = Unmanaged.passUnretained(self).toOpaque()
-        let name = "com.mukeshtiwari.keyboat.themeChanged" as CFString
-
-        CFNotificationCenterAddObserver(
-            center,
-            observer,
-            { _, observer, _, _, _ in
-                guard let observer = observer else { return }
-                let vc = Unmanaged<KeyboardViewController>.fromOpaque(observer).takeUnretainedValue()
-                Task { @MainActor in
-                    vc.prefs.reloadFromDefaults()
-                    vc.themeEngine.reloadCustomThemes()
-                    vc.themeEngine.activate(themeID: vc.prefs.themeID)
-                }
-            },
-            name,
-            nil,
-            .deliverImmediately
-        )
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -106,12 +75,16 @@ final class KeyboardViewController: UIInputViewController {
 
     override func textDidChange(_ textInput: (any UITextInput)?) {
         super.textDidChange(textInput)
+        prefs.reloadFromDefaults()
+        themeEngine.activate(themeID: prefs.themeID)
         // Auto-capitalise: if the proxy says we're at sentence start, engage shift
         updateShiftForContext()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+        prefs.reloadFromDefaults()
+        themeEngine.activate(themeID: prefs.themeID)
     }
 
     // MARK: - Setup

@@ -25,7 +25,8 @@ public enum AppGroup {
     /// Helper to check if App Group container is provisioned and accessible without triggering sandbox warnings
     public static var isAppGroupAvailable: Bool {
         guard let url = containerURL else { return false }
-        return FileManager.default.fileExists(atPath: url.path) || (try? FileManager.default.contentsOfDirectory(atPath: url.path)) != nil
+        var isDir: ObjCBool = false
+        return FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir) && isDir.boolValue
     }
 
     // MARK: - Shared container URL

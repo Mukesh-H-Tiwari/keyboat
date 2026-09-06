@@ -46,11 +46,33 @@ public enum FontWeightToken: String, Codable, Sendable, CaseIterable {
     case ultraLight, thin, light, regular, medium, semibold, bold, heavy, black
 }
 
+// MARK: - ThemeCategory
+
+public enum ThemeCategory: String, Codable, Sendable, CaseIterable, Identifiable {
+    case iosSystem = "iOS System"
+    case oledDark = "Dark & OLED"
+    case minimalPastel = "Minimal & Pastel"
+    case vibrantNeon = "Vibrant & Neon"
+    case custom = "Custom"
+
+    public var id: String { rawValue }
+    public var iconName: String {
+        switch self {
+        case .iosSystem: return "apple.logo"
+        case .oledDark: return "moon.stars.fill"
+        case .minimalPastel: return "sparkles"
+        case .vibrantNeon: return "bolt.fill"
+        case .custom: return "paintpalette.fill"
+        }
+    }
+}
+
 // MARK: - Theme
 
 public struct Theme: Codable, Sendable, Identifiable, Equatable {
     public let id: String                       // e.g. "dark", "ocean", user UUID
     public var name: String
+    public var category: ThemeCategory
     public var isBuiltIn: Bool
 
     // Background
@@ -95,7 +117,7 @@ public struct Theme: Codable, Sendable, Identifiable, Equatable {
     public var shadowOpacity: Double        // 0–1
 
     public init(
-        id: String, name: String, isBuiltIn: Bool = false,
+        id: String, name: String, category: ThemeCategory = .custom, isBuiltIn: Bool = false,
         keyboardBackground: ColorToken, numberRowBackground: ColorToken,
         keyBackground: ColorToken, keyForeground: ColorToken,
         keyShadow: ColorToken, keyCornerRadius: Double,
@@ -109,7 +131,7 @@ public struct Theme: Codable, Sendable, Identifiable, Equatable {
         keyFont: FontToken = .init(), specialKeyFont: FontToken = .init(size: 13),
         keySpacing: Double = 6, keyHeight: Double = 44, shadowOpacity: Double = 0.3
     ) {
-        self.id = id; self.name = name; self.isBuiltIn = isBuiltIn
+        self.id = id; self.name = name; self.category = category; self.isBuiltIn = isBuiltIn
         self.keyboardBackground = keyboardBackground
         self.numberRowBackground = numberRowBackground
         self.keyBackground = keyBackground

@@ -38,7 +38,18 @@ public final class ThemeEngine: ObservableObject, ThemeEngineProtocol {
         self.allThemes   = all
         let saved    = store.themeID
         self.activeTheme = all.first(where: { $0.id == saved }) ?? builtIns[0]
+
+        // Keep activeTheme synchronized whenever store.themeID changes across App Group or App UI
+        store.$themeID
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newID in
+                self?.activate(themeID: newID)
+            }
+            .store(in: &cancellables)
     }
+
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Activation
 

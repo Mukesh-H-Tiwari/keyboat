@@ -45,6 +45,13 @@ final class KeyboardViewController: UIInputViewController {
         registerDarwinNotificationObserver()
     }
 
+    deinit {
+        let center = CFNotificationCenterGetDarwinNotifyCenter()
+        let observer = Unmanaged.passUnretained(self).toOpaque()
+        let name = "com.mukeshtiwari.keyboat.themeChanged" as CFString
+        CFNotificationCenterRemoveObserver(center, observer, CFNotificationName(name), nil)
+    }
+
     private func registerDarwinNotificationObserver() {
         let center = CFNotificationCenterGetDarwinNotifyCenter()
         let observer = Unmanaged.passUnretained(self).toOpaque()

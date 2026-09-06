@@ -14,13 +14,19 @@ public enum AppGroup {
     // MARK: - Shared UserDefaults
 
     /// UserDefaults backed by the shared App Group container.
-    /// Safely falls back to UserDefaults.standard if App Group provisioning isn't enabled yet on device.
+    /// Safely falls back to UserDefaults.standard if App Group container is not provisioned on device.
     public nonisolated(unsafe) static let defaults: UserDefaults = {
-        if containerURL != nil, let d = UserDefaults(suiteName: suiteName) {
+        if isAppGroupAvailable, let d = UserDefaults(suiteName: suiteName) {
             return d
         }
         return UserDefaults.standard
     }()
+
+    /// Helper to check if App Group container is provisioned and accessible without triggering sandbox warnings
+    public static var isAppGroupAvailable: Bool {
+        guard let url = containerURL else { return false }
+        return FileManager.default.fileExists(atPath: url.path) || (try? FileManager.default.contentsOfDirectory(atPath: url.path)) != nil
+    }
 
     // MARK: - Shared container URL
 

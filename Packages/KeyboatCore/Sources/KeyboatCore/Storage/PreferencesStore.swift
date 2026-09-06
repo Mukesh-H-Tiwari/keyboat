@@ -38,7 +38,7 @@ public final class PreferencesStore: ObservableObject {
 
     // MARK: - Published properties
 
-    @Published public var themeID: String              = "midnight"
+    @Published public var themeID: String              = "dark"
     @Published public var numberRowEnabled: Bool       = true
     @Published public var hapticsEnabled: Bool         = true
     @Published public var hapticsIntensity: HapticLevel = .medium
@@ -53,11 +53,11 @@ public final class PreferencesStore: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     private init() {
-        guard let d = UserDefaults(suiteName: AppGroup.suiteName) else {
+        if AppGroup.containerURL != nil, let d = UserDefaults(suiteName: AppGroup.suiteName) {
+            self.defaults = d
+        } else {
             self.defaults = UserDefaults.standard
-            return
         }
-        self.defaults = d
         registerDefaults()
         readFromDefaults()
         setupPersistence()
@@ -67,7 +67,7 @@ public final class PreferencesStore: ObservableObject {
 
     private func registerDefaults() {
         defaults.register(defaults: [
-            PrefKey.themeID.rawValue:              "midnight",
+            PrefKey.themeID.rawValue:              "dark",
             PrefKey.numberRowEnabled.rawValue:     true,
             PrefKey.hapticsEnabled.rawValue:       true,
             PrefKey.hapticsIntensity.rawValue:     HapticLevel.medium.rawValue,
